@@ -17,7 +17,7 @@ services:
             - MONGODB_PASSWORD=${MONGODB_DEV_PASSWORD:?'Please, specify db (dev) user password'}
             - MONGODB_DATABASE=${MONGODB_DEV_DATABASE:?'Please, specify application (dev) database'}
             - MONGODB_PORT_NUMBER=${PARSE_DB_DEV_PORT:-27017}
-            - MONGODB_EXTRA_FLAGS=${MONGODB_EXTRA_FLAGS}
+            - MONGODB_EXTRA_FLAGS=${MONGODB_EXTRA_FLAGS_DEV}
         ports:
             - "${PARSE_DB_DEV_PORT:-27017}:${PARSE_DB_DEV_PORT:-27017}"
         networks:
@@ -35,7 +35,7 @@ services:
             - MONGODB_PASSWORD=${MONGODB_PASSWORD:?'Please, specify db (prod) user password'}
             - MONGODB_DATABASE=${MONGODB_DATABASE:?'Please, specify application (prod) database'}
             - MONGODB_PORT_NUMBER=${PARSE_DB_PORT:-27017}
-            - MONGODB_EXTRA_FLAGS=${MONGODB_EXTRA_FLAGS}
+            - MONGODB_EXTRA_FLAGS=${MONGODB_EXTRA_FLAGS_PROD}
         ports:
             - "${PARSE_DB_PORT:-27017}:${PARSE_DB_PORT:-27017}"
         networks:

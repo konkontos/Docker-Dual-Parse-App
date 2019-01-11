@@ -1,0 +1,30 @@
+{
+    "apps" : [
+        {
+            "appId" : "parseapp",
+            "masterKey" : "12345678",
+            "readOnlyMasterKey": "abcdef",
+            "serverURL" : "http://127.0.0.1:1337/parse",
+            "appName" : "parsedash",
+            "production" : "true"
+        },
+        {
+            "appId" : "parseapp-dev",
+            "masterKey" : "12345678",
+            "readOnlyMasterKey": "abcdef",
+            "serverURL" : "http://127.0.0.1:2337/parse",
+            "appName" : "parsedash-dev"
+        }
+    ],
+    "users" : [
+        {
+            "pass" : "password",
+            "user" : "admin"
+        },
+        {
+            "pass" : "test",
+            "user" : "test",
+            "readOnly": true
+        }
+    ]
+}

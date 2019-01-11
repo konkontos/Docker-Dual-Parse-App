@@ -1,0 +1,112 @@
+version: '3.5'
+
+networks:
+
+    app_network:
+        name: "${PARSE_NETWORK:-parse}"
+
+services:
+
+    database_dev:
+        restart: always
+        container_name: ${CN_DEV_DATABASE:-parse-mongo}
+        image: bitnami/mongodb:latest
+        environment:
+            - MONGODB_ROOT_PASSWORD=${MONGODB_DEV_ROOT_PASSWORD:?'Please, specify mongodb (dev) root password'}
+            - MONGODB_USERNAME=${MONGODB_DEV_USERNAME:?'Please, specify mongodb (dev) database user'}
+            - MONGODB_PASSWORD=${MONGODB_DEV_PASSWORD:?'Please, specify db (dev) user password'}
+            - MONGODB_DATABASE=${MONGODB_DEV_DATABASE:?'Please, specify application (dev) database'}
+            - MONGODB_PORT_NUMBER=${PARSE_DB_DEV_PORT:-27017}
+            - MONGODB_EXTRA_FLAGS=${MONGODB_EXTRA_FLAGS}
+        ports:
+            - "${PARSE_DB_DEV_PORT:-27017}:${PARSE_DB_DEV_PORT:-27017}"
+        networks:
+            - app_network
+        volumes:
+            - "${PARSE_APP_FOLDER:?'Please, specify app folder in .env file.'}/database/dev:/bitnami"
+
+    database_prod:
+        restart: always
+        container_name: ${CN_DATABASE:-parse-mongo}
+        image: bitnami/mongodb:latest
+        environment:
+            - MONGODB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD:?'Please, specify mongodb (prod) root password'}
+            - MONGODB_USERNAME=${MONGODB_USERNAME:?'Please, specify mongodb (prod) database user'}
+            - MONGODB_PASSWORD=${MONGODB_PASSWORD:?'Please, specify db (prod) user password'}
+            - MONGODB_DATABASE=${MONGODB_DATABASE:?'Please, specify application (prod) database'}
+            - MONGODB_PORT_NUMBER=${PARSE_DB_PORT:-27017}
+            - MONGODB_EXTRA_FLAGS=${MONGODB_EXTRA_FLAGS}
+        ports:
+            - "${PARSE_DB_PORT:-27017}:${PARSE_DB_PORT:-27017}"
+        networks:
+            - app_network
+        volumes:
+            - "${PARSE_APP_FOLDER:?'Please, specify app folder in .env file.'}/database/prod:/bitnami"
+
+    server_dev:
+        restart: always
+        image: bitnami/parse:latest
+#        build:
+#            context: .
+        depends_on:
+            - database_dev
+        container_name: ${CN_DEV_SERVER:-parse}
+        ports:
+            - "${PARSE_DEV_PORT:-1337}:${PARSE_DEV_PORT:-1337}"
+        environment:
+            - PARSE_APP_FOLDER=${PARSE_APP_FOLDER:?'Please, specify parse app folder'}
+            - PARSE_APP_ID=${PARSE_APP_ID_DEV:?'Please, specify parse app id (dev)'}
+            - PARSE_MASTER_KEY=${PARSE_MASTER_KEY_DEV:?'Please, specify parse master key (dev)'}
+            - MONGODB_HOST=${CN_DEV_DATABASE:-parse-mongo}
+            - MONGODB_PORT_NUMBER=${PARSE_DB_DEV_PORT:-27017}
+            - PARSE_PORT_NUMBER=${PARSE_DEV_PORT:-1337}
+            - PARSE_HOST=${PARSE_HOST_DEV:-localhost}
+        volumes:
+            - "${PARSE_APP_FOLDER:?'Please, specify app folder in .env file.'}/parse/dev:/bitnami"
+        networks:
+            - app_network
+
+
+    server_prod:
+        restart: always
+        image: bitnami/parse:latest
+#        build:
+#            context: .
+        depends_on:
+            - database_prod
+        container_name: ${CN_SERVER:-parse}
+        ports:
+            - "${PARSE_PORT:-1337}:${PARSE_PORT:-1337}"
+        environment:
+            - PARSE_APP_FOLDER=${PARSE_APP_FOLDER:?'Please, specify parse app folder'}
+            - PARSE_APP_ID=${PARSE_APP_ID:?'Please, specify parse app id (prod)'}
+            - PARSE_MASTER_KEY=${PARSE_MASTER_KEY:?'Please, specify parse master key (prod)'}
+            - MONGODB_HOST=${CN_DATABASE:-parse-mongo}
+            - MONGODB_PORT_NUMBER=${PARSE_DB_PORT:-27017}
+            - PARSE_PORT_NUMBER=${PARSE_PORT:-1337}
+            - PARSE_HOST=${PARSE_HOST:-localhost}
+        volumes:
+            - "${PARSE_APP_FOLDER:?'Please, specify app folder in .env file.'}/parse/prod:/bitnami"
+        networks:
+            - app_network
+
+    dashboard:
+        restart: always
+        container_name: ${CN_DASHBOARD:-parse-dashboard}
+        image: bitnami/parse-dashboard:latest
+        depends_on:
+            - server_dev
+            - server_prod
+        ports:
+            - "${PARSE_DASHBOARD_PORT:-4040}:4040"
+        networks:
+            - app_network
+        environment:
+            - PARSE_DASHBOARD_APP_NAME
+            - PARSE_DASHBOARD_USER
+            - PARSE_DASHBOARD_PASSWORD
+            - PARSE_HOST_DEV
+            - PARSE_MASTER_KEY_DEV
+            - PARSE_APP_ID_DEV
+        volumes:
+            - "${PARSE_APP_FOLDER:?'Please, specify app folder in .env file.'}/dashboard:/bitnami"

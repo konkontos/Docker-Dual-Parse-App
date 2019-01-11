@@ -1,0 +1,80 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXFileReference section */
+		8551E89921E881E700A1B06F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		8551E89A21E881E700A1B06F /* sample.env */ = {isa = PBXFileReference; lastKnownFileType = text; path = sample.env; sourceTree = "<group>"; };
+		8551E89B21E881F900A1B06F /* sample-server-config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "sample-server-config.json"; sourceTree = "<group>"; };
+		8551E89C21E881F900A1B06F /* sample-dashboard-config.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "sample-dashboard-config.json"; sourceTree = "<group>"; };
+		8551E89D21E8820100A1B06F /* docker-compose.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = "docker-compose.yml"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		8551E89221E881C700A1B06F = {
+			isa = PBXGroup;
+			children = (
+				8551E89921E881E700A1B06F /* README.md */,
+				8551E89A21E881E700A1B06F /* sample.env */,
+				8551E89B21E881F900A1B06F /* sample-server-config.json */,
+				8551E89C21E881F900A1B06F /* sample-dashboard-config.json */,
+				8551E89D21E8820100A1B06F /* docker-compose.yml */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		8551E89321E881C700A1B06F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1010;
+			};
+			buildConfigurationList = 8551E89621E881C700A1B06F /* Build configuration list for PBXProject "Docker Dual Parse App" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 8551E89221E881C700A1B06F;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		8551E89721E881C700A1B06F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		8551E89821E881C700A1B06F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8551E89621E881C700A1B06F /* Build configuration list for PBXProject "Docker Dual Parse App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8551E89721E881C700A1B06F /* Debug */,
+				8551E89821E881C700A1B06F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8551E89321E881C700A1B06F /* Project object */;
+}

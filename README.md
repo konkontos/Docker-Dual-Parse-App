@@ -23,6 +23,7 @@ Based on [Bitnami](https://bitnami.com/stack/parse/containers) images.
 
 - Modify these default config files accordingly (see `sample` configs in this repo.) and restart the apps.
 
+- For **Parse Dashboard**, the `serverURL` parameter in `config.json`  should be pointing at the **public** URL for the Parse server(s), not the Docker container name.
 
 
 ## Start everything

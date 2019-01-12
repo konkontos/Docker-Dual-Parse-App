@@ -19,6 +19,8 @@ Based on [Bitnami](https://bitnami.com/stack/parse/containers) images.
 
 - Each app will now have an auto-generated default config file (with info derived from the `.env` file)
 
+- **Make a note** of the MongoDB database URI provided by these auto-generated config files  
+
 - Modify these default config files accordingly (see `sample` configs in this repo.) and restart the apps.
 
 

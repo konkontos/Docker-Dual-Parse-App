@@ -13,9 +13,6 @@ services:
         image: bitnami/mongodb:latest
         environment:
             - MONGODB_ROOT_PASSWORD=${MONGODB_DEV_ROOT_PASSWORD:?'Please, specify mongodb (dev) root password'}
-            - MONGODB_USERNAME=${MONGODB_DEV_USERNAME:?'Please, specify mongodb (dev) database user'}
-            - MONGODB_PASSWORD=${MONGODB_DEV_PASSWORD:?'Please, specify db (dev) user password'}
-            - MONGODB_DATABASE=${MONGODB_DEV_DATABASE:?'Please, specify application (dev) database'}
             - MONGODB_PORT_NUMBER=${PARSE_DB_DEV_PORT:-27017}
             - MONGODB_EXTRA_FLAGS=${MONGODB_EXTRA_FLAGS_DEV}
         ports:
@@ -31,9 +28,6 @@ services:
         image: bitnami/mongodb:latest
         environment:
             - MONGODB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD:?'Please, specify mongodb (prod) root password'}
-            - MONGODB_USERNAME=${MONGODB_USERNAME:?'Please, specify mongodb (prod) database user'}
-            - MONGODB_PASSWORD=${MONGODB_PASSWORD:?'Please, specify db (prod) user password'}
-            - MONGODB_DATABASE=${MONGODB_DATABASE:?'Please, specify application (prod) database'}
             - MONGODB_PORT_NUMBER=${PARSE_DB_PORT:-27017}
             - MONGODB_EXTRA_FLAGS=${MONGODB_EXTRA_FLAGS_PROD}
         ports:
@@ -50,6 +44,8 @@ services:
 #            context: .
         depends_on:
             - database_dev
+        links:
+            - database_dev:${CN_DEV_DATABASE:-parse-mongo}
         container_name: ${CN_DEV_SERVER:-parse}
         ports:
             - "${PARSE_DEV_PORT:-1337}:${PARSE_DEV_PORT:-1337}"
@@ -59,6 +55,7 @@ services:
             - PARSE_MASTER_KEY=${PARSE_MASTER_KEY_DEV:?'Please, specify parse master key (dev)'}
             - MONGODB_HOST=${CN_DEV_DATABASE:-parse-mongo}
             - MONGODB_PORT_NUMBER=${PARSE_DB_DEV_PORT:-27017}
+            - MONGODB_PASSWORD=${MONGODB_DEV_ROOT_PASSWORD:?'Please, specify mongodb (dev) root password'}
             - PARSE_PORT_NUMBER=${PARSE_DEV_PORT:-1337}
             - PARSE_HOST=${PARSE_HOST_DEV:-localhost}
         volumes:
@@ -74,6 +71,8 @@ services:
 #            context: .
         depends_on:
             - database_prod
+        links:
+            - database_prod:${CN_DATABASE:-parse-mongo}
         container_name: ${CN_SERVER:-parse}
         ports:
             - "${PARSE_PORT:-1337}:${PARSE_PORT:-1337}"
@@ -83,6 +82,7 @@ services:
             - PARSE_MASTER_KEY=${PARSE_MASTER_KEY:?'Please, specify parse master key (prod)'}
             - MONGODB_HOST=${CN_DATABASE:-parse-mongo}
             - MONGODB_PORT_NUMBER=${PARSE_DB_PORT:-27017}
+            - MONGODB_PASSWORD=${MONGODB_ROOT_PASSWORD:?'Please, specify mongodb (prod) root password'}
             - PARSE_PORT_NUMBER=${PARSE_PORT:-1337}
             - PARSE_HOST=${PARSE_HOST:-localhost}
         volumes:
@@ -97,6 +97,9 @@ services:
         depends_on:
             - server_dev
             - server_prod
+        links:
+            - server_dev:${CN_DEV_SERVER:-parse}
+            - server_prod:${CN_SERVER:-parse}
         ports:
             - "${PARSE_DASHBOARD_PORT:-4040}:4040"
         networks:
@@ -105,8 +108,12 @@ services:
             - PARSE_DASHBOARD_APP_NAME
             - PARSE_DASHBOARD_USER
             - PARSE_DASHBOARD_PASSWORD
-            - PARSE_HOST_DEV
-            - PARSE_MASTER_KEY_DEV
-            - PARSE_APP_ID_DEV
+            - PARSE_HOST
+            - PARSE_MASTER_KEY
+            - PARSE_APP_ID
+            - PARSE_PORT_NUMBER:${PARSE_PORT:-1337}
+            - PARSE_DASHBOARD_ALLOW_INSECURE_HTTP:1
+            - ALLOW_INSECURE_HTTP:1
+            - MOUNT_PATH:"/parse"
         volumes:
             - "${PARSE_APP_FOLDER:?'Please, specify app folder in .env file.'}/dashboard:/bitnami"

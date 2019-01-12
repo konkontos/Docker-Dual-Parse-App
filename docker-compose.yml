@@ -9,6 +9,7 @@ services:
 
     database_dev:
         restart: always
+        user: root
         container_name: ${CN_DEV_DATABASE:-parse-mongo}
         image: bitnami/mongodb:latest
         environment:
@@ -24,6 +25,7 @@ services:
 
     database_prod:
         restart: always
+        user: root
         container_name: ${CN_DATABASE:-parse-mongo}
         image: bitnami/mongodb:latest
         environment:
@@ -39,6 +41,7 @@ services:
 
     server_dev:
         restart: always
+        user: root
         image: bitnami/parse:latest
 #        build:
 #            context: .
@@ -66,6 +69,7 @@ services:
 
     server_prod:
         restart: always
+        user: root
         image: bitnami/parse:latest
 #        build:
 #            context: .
@@ -92,6 +96,7 @@ services:
 
     dashboard:
         restart: always
+        user: root
         container_name: ${CN_DASHBOARD:-parse-dashboard}
         image: bitnami/parse-dashboard:latest
         depends_on:

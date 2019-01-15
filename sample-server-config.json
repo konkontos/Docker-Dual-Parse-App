@@ -22,6 +22,33 @@
             "host" : "api.mailgun.net",
             "domain" : "[some email domain]"
         }
-    }
+    },
+    "accountLockout": {
+		  "duration": 10,
+		  "threshold": 5
+		},
+    "passwordPolicy": {
+    "validatorPattern": "/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/",
+    "doNotAllowUsername": true,
+    "maxPasswordAge": 90,
+    "maxPasswordHistory": 5,
+    "resetTokenValidityDuration": 24*60*60
+    },
+    "databaseOptions": {
+        "ssl": true,
+        "sslValidate": false,
+        "allowConnectionsWithoutCertificates": true,
+        "sslCA": "[fs.readFileSync('SSLCA.pem')]"
+    },
+    "push": {
+    	"ios": [
+    	    	{
+    			  "pfx": "push_development.p12",
+    			  "bundleId": "[app bundle identifier]",
+                  "passphrase":"[password for .p12]",
+    			  "production": true
+    	    	}
+    	    ]
+	}
 }
 

@@ -12,6 +12,8 @@ services:
         user: root
         container_name: ${CN_DEV_DATABASE:-parse-mongo}
         image: bitnami/mongodb:latest
+        logging:
+            driver: "${LOGGING_OPTION:-json-file}"
         environment:
             - MONGODB_ROOT_PASSWORD=${MONGODB_DEV_ROOT_PASSWORD:?'Please, specify mongodb (dev) root password'}
             - MONGODB_PORT_NUMBER=${PARSE_DB_DEV_PORT:-27017}
@@ -28,6 +30,8 @@ services:
         user: root
         container_name: ${CN_DATABASE:-parse-mongo}
         image: bitnami/mongodb:latest
+        logging:
+            driver: "${LOGGING_OPTION:-json-file}"
         environment:
             - MONGODB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD:?'Please, specify mongodb (prod) root password'}
             - MONGODB_PORT_NUMBER=${PARSE_DB_PORT:-27017}
@@ -43,6 +47,8 @@ services:
         restart: always
         user: root
         image: bitnami/parse:latest
+        logging:
+            driver: "${LOGGING_OPTION:-json-file}"
 #        build:
 #            context: .
         depends_on:
@@ -71,6 +77,8 @@ services:
         restart: always
         user: root
         image: bitnami/parse:latest
+        logging:
+            driver: "${LOGGING_OPTION:-json-file}"
 #        build:
 #            context: .
         depends_on:
@@ -99,6 +107,8 @@ services:
         user: root
         container_name: ${CN_DASHBOARD:-parse-dashboard}
         image: bitnami/parse-dashboard:latest
+        logging:
+            driver: "${LOGGING_OPTION:-json-file}"
         depends_on:
             - server_dev
             - server_prod

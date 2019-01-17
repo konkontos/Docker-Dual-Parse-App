@@ -4,6 +4,7 @@
     "readOnlyMasterKey": "abcdef",
     "clientKey": "ter4542yyrt",
     "restAPIKey": "6847586htj",
+    "javascriptKey": "123456",
     "appName": "parse-server",
     "mountPath": "/parse",
     "port": "1337",

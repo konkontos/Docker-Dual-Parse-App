@@ -14,6 +14,16 @@
     "publicServerURL": "https://[host]/parse",
     "emailVerifyTokenValidityDuration": 7200,
     "preventLoginWithUnverifiedEmail": false,
+    "filesAdapter": {
+        "module": "@parse/s3-files-adapter",
+        "options": {
+            "region": "us-west-1",
+            "directAccess": false,
+            "bucket": "[bucket name]",
+            "accessKey":"[access key]",
+            "secretKey":"[secret key]"
+        }
+    },
     "emailAdapter" : {
         "module" : "@parse/simple-mailgun-adapter",
         "options" : {

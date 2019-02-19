@@ -15,6 +15,9 @@
     "publicServerURL": "https://[host]/parse",
     "emailVerifyTokenValidityDuration": 7200,
     "preventLoginWithUnverifiedEmail": false,
+    "enableAnonymousUsers": false,
+    "expireInactiveSessions": true,
+    "revokeSessionOnPasswordReset": true,
     "filesAdapter": {
         "module": "@parse/s3-files-adapter",
         "options": {

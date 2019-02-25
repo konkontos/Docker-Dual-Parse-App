@@ -11,6 +11,7 @@
     "host": "0.0.0.0",
     "serverURL": "http://127.0.0.1:1337/parse",
     "databaseURI": "mongodb://[dbuser]:[dbpass]@parse-mongo:27017/bitnami_parse",
+    "cloud": "/opt/bitnami/parse/cloud/main.js",
     "verifyUserEmails" : true,
     "publicServerURL": "https://[host]/parse",
     "emailVerifyTokenValidityDuration": 7200,

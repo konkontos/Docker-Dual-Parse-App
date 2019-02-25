@@ -67,8 +67,11 @@ services:
             - MONGODB_PASSWORD=${MONGODB_DEV_ROOT_PASSWORD:?'Please, specify mongodb (dev) root password'}
             - PARSE_PORT_NUMBER=${PARSE_DEV_PORT:-1337}
             - PARSE_HOST=${PARSE_HOST_DEV:-localhost}
+            - PARSE_ENABLE_CLOUD_CODE=yes
         volumes:
             - "${PARSE_APP_FOLDER:?'Please, specify app folder in .env file.'}/parse/dev:/bitnami"
+            - "${PARSE_APP_FOLDER:?'Please, specify app folder in .env file.'}/parse/dev/cloud:/opt/bitnami/parse/cloud"
+            - "${PARSE_APP_FOLDER:?'Please, specify app folder in .env file.'}/parse/dev/logs:/logs"
         networks:
             - app_network
 
@@ -97,8 +100,11 @@ services:
             - MONGODB_PASSWORD=${MONGODB_ROOT_PASSWORD:?'Please, specify mongodb (prod) root password'}
             - PARSE_PORT_NUMBER=${PARSE_PORT:-1337}
             - PARSE_HOST=${PARSE_HOST:-localhost}
+            - PARSE_ENABLE_CLOUD_CODE=yes
         volumes:
             - "${PARSE_APP_FOLDER:?'Please, specify app folder in .env file.'}/parse/prod:/bitnami"
+            - "${PARSE_APP_FOLDER:?'Please, specify app folder in .env file.'}/parse/prod/cloud:/opt/bitnami/parse/cloud"
+            - "${PARSE_APP_FOLDER:?'Please, specify app folder in .env file.'}/parse/prod/logs:/logs"
         networks:
             - app_network
 
